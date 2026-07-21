@@ -7,7 +7,7 @@ add_action('wp_enqueue_scripts', function() {
 
     wp_enqueue_style('hero-reveal-style', $theme_uri . '/assets/css/hero-reveal.css', array(), $version);
 
-    // Libreria p5.js da CDN
+    
     wp_enqueue_script('p5js', 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js', array(), '1.9.0', true);
 
     wp_enqueue_script('hero-reveal-script', $theme_uri . '/assets/js/hero-reveal.js', array('p5js'), $version, true);
@@ -20,25 +20,23 @@ add_shortcode('hero_reveal', function($atts) {
         'outlines'        => '',
         'title'           => '',
         'subtitle'        => '',
-        'blobs'           => 15,     // Numero di "nuvole"
-        'flow_speed'      => 0.35,   // Velocità movimento fluido
-        'blur'            => 25,     // Fusione metaball
-        'mouse_influence' => 0.06,   // Attrazione cursore
-        'mouse_radius'    => 260,    // Raggio d'azione cursore (px)
-        'blob_min'        => 60,     // Raggio minimo blob (px)
-        'blob_max'        => 140,    // Raggio massimo blob (px)
+        'blobs'           => 15,     
+        'flow_speed'      => 0.35,   
+        'blur'            => 25,     
+        'mouse_influence' => 0.06,   
+        'mouse_radius'    => 260,    
+        'blob_min'        => 60,     
+        'blob_max'        => 140,    
     ), $atts, 'hero_reveal');
 
     $base     = esc_url($atts['base']);
     $reveal   = esc_url($atts['reveal']);
     $outlines = esc_url($atts['outlines']);
 
-    // Controllo che i 3 layer essenziali siano presenti
     if (empty($base) || empty($reveal) || empty($outlines)) {
         return '<p style="color:red; font-weight:bold;">[Hero Reveal]: Specifica tutti gli URL (base, reveal, outlines) nello shortcode.</p>';
     }
 
-    // ID univoco per evitare conflitti se lo shortcode viene inserito più volte
     $unique_id = 'heroReveal-' . wp_generate_password(6, false, false);
 
     ob_start();
